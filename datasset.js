@@ -101,7 +101,7 @@ function sendChunk(message, chunkSize, chunk, maxChunks) {
 }
 
 function _startDataChannel (id) {
-    _dcs[id] = _pcs[id].createDataChannel('file');
+    _dcs[id] = _pcs[id].createDataChannel('file', {'binaryType': 'blob'});
 
     _dcs[id].onmessage = function(message) {
         console.log('RAW' + message.data);
@@ -127,7 +127,7 @@ function _startDataChannel (id) {
         }
     };
 
-    _commandChannel[id] = _pcs[id].createDataChannel('commands');
+    _commandChannel[id] = _pcs[id].createDataChannel('commands', {'binaryType': 'blob'});
     _commandChannel[id].onmessage = onmessagecallback;
 }
 
