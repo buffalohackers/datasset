@@ -16,10 +16,10 @@ onmessagecallback = function(message) {
         if (mess[0] == 'getImage') {
             sendLarge('image:' + mess[1] + ':' + chrome.storage.local.get(mess[1]));
         } else if (mess[0] == 'image') {
-            url = mess[1],
+            var url = mess[1],
             urlParts = url.split("/"),
             filename = urlParts[urlParts.length - 1],
-            data = mess[2]
+            data = mess[2];
 
             var store = {},
                 raw = {};
@@ -66,9 +66,9 @@ chrome.webRequest.onBeforeRequest.addListener(function(r) {
             chrome.tabs.sendMessage(tabs[0].id, {key: url, type: "local"});
         });
         return {redirectUrl: "chrome://blank"};
-    } else if (url in peerKeys) { //if in someone elses peer
+    } else if (hasOwnProperty(peerKeys, url)) { //if in someone elses peer
         //send a request for it to the peer
-        send('getImage:' + url);
+        sendCommand('getImage:' + url);
         console.log("Peer cache hit.");
         chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
             console.log("sending message to: " + tabs[0].id);

@@ -27,6 +27,7 @@ chrome.runtime.onMessage.addListener(function(msg, sender, sendMessage) {
             console.log('WAITING');
             img.onload = function() {
                 console.log('test');
+                var peerKeys = {}; // {key: [peer, peer...], ...}
                 // YOLO
                 imgWidth = this.width;
                 imgHeight = this.height;
