@@ -250,5 +250,8 @@ function _updateDescription(pc, client_id2, _client_id) {
 function checkConn(dc_id) {
     if (_dcs[dc_id].readyState != "open") {
         _updateDescription(_pcs[dc_id], client_id, dc_id);
+    } else {
+        console.log("ASKING FOR KEYS");
+        sendCommand('getKeys');
     }
 }

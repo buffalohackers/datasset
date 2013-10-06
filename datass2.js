@@ -40,10 +40,7 @@ onmessagecallback = function(message) {
 chrome.storage.local.get(null, function(items) {
     keys = Object.keys(items);
     makeConnection('omgdoesitwork', function (id) {
-        console.log('hereee');
-        
-        console.log('SENDING GET KEYS');
-        sendCommand('getKeys');
+        console.log('first attempt conn');
     });
 });
 
