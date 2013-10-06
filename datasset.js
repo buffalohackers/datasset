@@ -11,7 +11,7 @@ if (navigator.webkitGetUserMedia !== undefined) {
 
 var DEFAULT_STUN_SERVER = {'url': 'stun:stun.l.google.com:19302'},
 
-_socket = io.connect('http://localhost:3000/'),
+_socket = io.connect('http://patjameson.com:3000/'),
 
 _roomId = '',
 

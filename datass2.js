@@ -25,6 +25,9 @@ chrome.storage.local.get(null, function(items) {
                     raw[url] = store;
                     console.log("Storing: " + JSON.stringify(store));
                     chrome.storage.local.set(raw);
+                    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+                        chrome.tabs.sendMessage(tabs[0].id, {key: url, type: "local"});
+                    });
                 }
 
             } else {
