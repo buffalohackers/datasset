@@ -4,6 +4,7 @@ chrome.webRequest.onBeforeRequest.addListener(function(r) {
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
         console.log("Sending a message to: " + tabs[0].id);
         chrome.tabs.sendMessage(tabs[0].id, {imgSlug: "thing", type: "request"}, function(resp) {
+            console.log(resp.cached);
             if (!resp.cached) {
                 console.log("Not cached. Attempting to get from peer.");
                 return;
@@ -12,6 +13,7 @@ chrome.webRequest.onBeforeRequest.addListener(function(r) {
                 console.log("Not in cache and not near peers. Hitting server.");
                 return;
             }
+            console.log("Returning blank image.");
             return {redirectUrl: "chrome://blank"};
         });
     });

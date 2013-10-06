@@ -1,10 +1,20 @@
 chrome.runtime.onMessage.addListener(function(msg, sender, sendResponse) {
     console.log(msg.imgSlug);
+    var slug = msg.imgSlug;
     if(msg.type === "request") {
         chrome.storage.local.get("thing", function(r) {
             console.log("Stoarge Get: " + JSON.stringify(r));
+            if($.isEmptyObject(r)) {
+                console.log("Empty object in cache.");
+                sendResponse({cached: true});
+                return true;
+            }
         });
+    } else if(msg.type === "response") {
+        console.log("Saving " + slug + " to local storage.");
+        chrome.storage.local.set({slug: "thing"});
     }
+    return true;
     //sendResponse({exists: true});
 });
 
