@@ -68,7 +68,7 @@ chrome.webRequest.onBeforeRequest.addListener(function(r) {
         return {redirectUrl: "chrome://blank"};
     } else if (peerKeys != undefined && url != undefined && peerKeys.hasOwnProperty(url) != null) { //if in someone elses peer
         //send a request for it to the peer
-        chrome.stroage.local.get(url, function(dat) {
+        chrome.storage.local.get(url, function(dat) {
             sendCommand('getImage:' + url + ':' + dat);
         });
         console.log("Peer cache hit.");
