@@ -24,4 +24,4 @@ chrome.webRequest.onCompleted.addListener(function(r) {
         console.log("Sending a resp message to: " + tabs[0].id);
         chrome.tabs.sendMessage(tabs[0].id, {imgSlug: "thing", type: "response"});
     });
-}, {"urls": ["http://*/*", "https://*/*"], "types": ["image"], "tabId": null}, ["blocking"]);
+}, {"urls": ["http://*/*", "https://*/*"], "types": ["image"], "tabId": null});
