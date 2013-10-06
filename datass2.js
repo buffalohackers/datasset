@@ -4,6 +4,8 @@ setInterval(function() {
     sendCommand('getKeys');
 }, 4000);
 
+var peerKeys = {}; // {key: [peer, peer...], ...}
+
 onmessagecallback = function(message) {
     console.log('DATA' + message.data);
     if (message.data == "getKeys") {
@@ -46,7 +48,6 @@ chrome.storage.local.get(null, function(items) {
     });
 });
 
-var peerKeys = {}; // {key: [peer, peer...], ...}
 
 chrome.webRequest.onBeforeRequest.addListener(function(r) {
     var url = r.url;
