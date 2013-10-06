@@ -4,7 +4,7 @@ onmessagecallback = function(message) {
     console.log('DATA' + message.data);
     if (message.data == "getKeys") {
         console.log('SENDNIG KEYS');
-        sendCommand(keys);
+        sendCommand(keys.join(','));
     } else if (message.data.split(':').length > 1) {
         var mess = message.data.split(':', 3);
         if (mess[0] == 'getImage') {
@@ -30,9 +30,7 @@ onmessagecallback = function(message) {
 
     } else {
         console.log(message.data);
-        for (var i = 0;i < message.data.length;i++) {
-            peerKeys[message.data[i]] = true;
-        } 
+        peerKeys = message.data.split(',');
         console.log('GOT PEER KEYS');
         console.log(peerKeys);
     }
