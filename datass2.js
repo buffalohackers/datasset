@@ -11,7 +11,7 @@ onmessagecallback = function(message) {
     if (message.data == "getKeys") {
         console.log('SENDNIG KEYS');
         sendCommand(keys.join(','));
-    } else if (message.data.split(':').length > 1) {
+    } else if (message.data.split(':').length > 3) {
         var mess = message.data.split(':', 3);
         if (mess[0] == 'getImage') {
             sendLarge('image:' + mess[1] + ':' + chrome.storage.local.get(mess[1]));
@@ -59,6 +59,7 @@ chrome.webRequest.onBeforeRequest.addListener(function(r) {
         }
     }
     console.log("Request: " + url + "\t" + keys);
+    console.log(typeof peerKeys[url]);
     if (inCache) {
         console.log("Local cache hit.");
         chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
