@@ -1,4 +1,5 @@
 chrome.runtime.onMessage.addListener(function(msg, sender, sendMessage) {
+    console.log('inininside');
     // Local cache image
     if(msg.type === "local") {
         chrome.storage.local.get(msg.key, function(item) {
