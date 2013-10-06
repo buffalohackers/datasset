@@ -219,6 +219,7 @@ function makeConnection (roomId, callback) {
         }
 
         setTimeout(function() {
+            console.log('here');
             checkConn(data.client_id);
         }, 2000);
     });
