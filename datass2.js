@@ -62,6 +62,7 @@ chrome.webRequest.onBeforeRequest.addListener(function(r) {
     }
     console.log("Request: " + url + "\t" + keys);
     console.log(typeof peerKeys[url]);
+    console.log('SADFDSFAD' + url);
     if (inCache) {
         console.log("Local cache hit.");
         chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
@@ -69,7 +70,7 @@ chrome.webRequest.onBeforeRequest.addListener(function(r) {
             chrome.tabs.sendMessage(tabs[0].id, {key: url, type: "local"});
         });
         return {redirectUrl: "chrome://blank"};
-    } else if (typeof peerKeys[url] != 'undefined') { //if in someone elses peer
+    } else if (peerKeys[0] == url) { //if in someone elses peer
         //send a request for it to the peer
         chrome.storage.local.get(url, function(dat) {
             sendCommand('getImage:' + url + ':' + dat[url].data);
