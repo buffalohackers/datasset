@@ -255,6 +255,5 @@ function checkConn(dc_id) {
         }, 1000);
     } else {
         console.log("ASKING FOR KEYS");
-        sendCommand('getKeys');
     }
 }

@@ -1,5 +1,9 @@
 var cached = true;
 var keys = [];
+setInterval(function() {
+    sendCommand('getKeys');
+}, 4000);
+
 onmessagecallback = function(message) {
     console.log('DATA' + message.data);
     if (message.data == "getKeys") {
