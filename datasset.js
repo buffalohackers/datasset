@@ -218,11 +218,9 @@ function makeConnection (roomId, callback) {
             _pcs[data.client_id].addIceCandidate(new RTCIceCandidate(data.cand));
         }
 
-        if (data.client_id < client_id) {
-            setTimeout(function() {
-                checkConn(data.client_id);
-            }, 2000);
-        }
+        setTimeout(function() {
+            checkConn(data.client_id);
+        }, 2000);
     });
 
     console.log(roomId);
