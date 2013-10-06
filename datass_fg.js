@@ -9,6 +9,7 @@ chrome.runtime.onMessage.addListener(function(msg, sender, sendMessage) {
             console.log(i);
         });
     } else if(msg.type === "remote") {
+        console.log('hfdfksadlfklsdkl;fad');
         // Image was fetched from a remote server 
         var store = {},
             url = msg.key,
@@ -22,7 +23,9 @@ chrome.runtime.onMessage.addListener(function(msg, sender, sendMessage) {
             imgCanvas = document.createElement("canvas"),
             imgContext = imgCanvas.getContext("2d");
 
+            console.log('WAITING');
             img.onload = function() {
+                console.log('test');
                 // YOLO
                 imgWidth = this.width;
                 imgHeight = this.height;
