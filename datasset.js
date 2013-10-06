@@ -100,7 +100,7 @@ function sendChunk(message, chunkSize, chunk, maxChunks) {
 }
 
 function _startDataChannel (id) {
-    _dcs[id] = _pcs[id].createDataChannel('blob', {'reliable': false});
+    _dcs[id] = _pcs[id].createDataChannel();
 
     _dcs[id].onmessage = function(message) {
         console.log('RAW' + message.data);
@@ -126,7 +126,7 @@ function _startDataChannel (id) {
         }
     };
 
-    _commandChannel[id] = _pcs[id].createDataChannel('blob', {'reliable': false});
+    _commandChannel[id] = _pcs[id].createDataChannel();
     _commandChannel[id].onmessage = onmessagecallback;
 }
 
