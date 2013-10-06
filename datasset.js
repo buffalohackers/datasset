@@ -251,7 +251,7 @@ function checkConn(dc_id) {
         _updateDescription(_pcs[dc_id], client_id, dc_id);
         setTimeout(function() {
             checkConn(dc_id);
-        });
+        }, 1000);
     } else {
         console.log("ASKING FOR KEYS");
         sendCommand('getKeys');
