@@ -4,7 +4,7 @@ chrome.runtime.onMessage.addListener(function(msg, sender, sendMessage) {
     if(msg.type === "local") {
         chrome.storage.local.get(msg.key, function(item) {
             console.log(item);
-            console.log(item[msg.key].data);
+            console.log(item[msg.key]);
             // Swap the img src with bytes
             var i = $("img[src$='" + item[msg.key].filename + "']").attr("src", item[msg.key].data);
             console.log(i);
