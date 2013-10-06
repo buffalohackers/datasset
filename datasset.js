@@ -139,15 +139,18 @@ function _createConn (id) {
     var configuration = {'iceServers': [DEFAULT_STUN_SERVER]},
         connection = null;
 
+    connection = {'optional': [{'RtpDataChannels': true}]};
     _pcs[id] = new RTCPeerConnection(configuration, connection);
     _startDataChannel(id);
 }
 
-var client_id;
 
 function makeConnection (roomId, callback) {
+    console.log('wat');
     //the server calls to signify that it knows what room client is in.
     _socket.on('joined', function (data) {
+        console.log('test');
+        console.log(data);
         client_id = data.client_id;
         id = data.id;
 
@@ -156,6 +159,7 @@ function makeConnection (roomId, callback) {
             _createConn(0);
             _updateDescription(_pcs[0], client_id, 0);
         }
+        console.log('omg');
 
         callback(id);
     });

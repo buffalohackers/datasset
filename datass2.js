@@ -1,44 +1,48 @@
 var cached = true;
 var keys = [];
+onmessagecallback = function(message) {
+    console.log('DATA' + message.data);
+    if (message.data == "getKeys") {
+        console.log('SENDNIG KEYS');
+        send(keys);
+    } else if (message.data.split(':').length > 1) {
+        var mess = message.data.split(':', 3);
+        if (mess[0] == 'getImage') {
+            sendLarge('image:' + mess[1] + ':' + chrome.storage.local.get(mess[1]));
+        } else if (mess[0] == 'image') {
+            url = mess[1],
+            urlParts = url.split("/"),
+            filename = urlParts[urlParts.length - 1],
+            data = mess[2]
+
+            var store = {},
+                raw = {};
+            store["key"] = url;
+            store["data"] = data;
+            store["filename"] = filename;
+            raw[url] = store;
+            console.log("Storing: " + JSON.stringify(store));
+            chrome.storage.local.set(raw);
+            chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+                chrome.tabs.sendMessage(tabs[0].id, {key: url, type: "local"});
+            });
+        }
+
+    } else {
+        console.log(message.data);
+        for (var i = 0;i < message.data.length;i++) {
+            peerKeys[message.data[i]] = true;
+        } 
+        console.log('GOT PEER KEYS');
+        console.log(peerKeys);
+    }
+}
 chrome.storage.local.get(null, function(items) {
     keys = Object.keys(items);
     makeConnection('omgdoesitwork', function (id) {
-        onmessagecallback = function(message) {
-            if (message.data == "getKeys") {
-                console.log('SENDNIG KEYS');
-                send(keys);
-            } else if (message.data.split(':').length > 1) {
-                var mess = message.data.split(':', 3);
-                if (mess[0] == 'getImage') {
-                    sendLarge('image:' + mess[1] + ':' + chrome.storage.local.get(mess[1]));
-                } else if (mess[0] == 'image') {
-                    url = mess[1],
-                    urlParts = url.split("/"),
-                    filename = urlParts[urlParts.length - 1],
-                    data = mess[2]
-
-                    var store = {},
-                        raw = {};
-                    store["key"] = url;
-                    store["data"] = data;
-                    store["filename"] = filename;
-                    raw[url] = store;
-                    console.log("Storing: " + JSON.stringify(store));
-                    chrome.storage.local.set(raw);
-                    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-                        chrome.tabs.sendMessage(tabs[0].id, {key: url, type: "local"});
-                    });
-                }
-
-            } else {
-                console.log(message.data);
-                for (var i = 0;i < message.data.length;i++) {
-                    peerKeys[message.data[i]] = true;
-                } 
-                console.log('GOT PEER KEYS');
-                console.log(peerKeys);
-            }
-        }
+        console.log('hereee');
+        
+        console.log('SENDING GET KEYS');
         sendCommand('getKeys');
     });
 });
