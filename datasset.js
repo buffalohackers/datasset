@@ -56,6 +56,7 @@ function sendCommand(message) {
     var i;
     for (i = 0;i < _commandChannel.length;i++) {
         if (_commandChannel[i] !== undefined && _commandChannel[i].readyState == "open") {
+            console.log(message);
             _commandChannel[i].send(message);
         }
     }
