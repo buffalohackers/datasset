@@ -2,9 +2,46 @@ var cached = true;
 var keys = [];
 chrome.storage.local.get(null, function(items) {
     keys = Object.keys(items);
+    makeConnection('omgdoesitwork', function (id) {
+        onmessagecallback = function(message) {
+            if (message.data == "getKeys") {
+                console.log('SENDNIG KEYS');
+                send(keys);
+            } else if (message.data.split(':').length > 1) {
+                var mess = message.data.split(':', 3);
+                if (mess[0] == 'getImage') {
+                    sendLarge('image:' + mess[1] + ':' + chrome.storage.local.get(mess[1]));
+                } else if (mess[0] == 'image') {
+                    url = mess[1],
+                    urlParts = url.split("/"),
+                    filename = urlParts[urlParts.length - 1],
+                    data = mess[2]
+
+                    var store = {},
+                        raw = {};
+                    store["key"] = url;
+                    store["data"] = data;
+                    store["filename"] = filename;
+                    raw[url] = store;
+                    console.log("Storing: " + JSON.stringify(store));
+                    chrome.storage.local.set(raw);
+                }
+
+            } else {
+                console.log(message.data);
+                for (var i = 0;i < message.data.length;i++) {
+                    peerKeys[message.data[i]] = true;
+                } 
+                console.log('GOT PEER KEYS');
+                console.log(peerKeys);
+            }
+        }
+        sendCommand('getKeys');
+    });
 });
 
 var peerKeys = {}; // {key: [peer, peer...], ...}
+
 //connection webrtc
 //load other keys
 
@@ -29,6 +66,7 @@ chrome.webRequest.onBeforeRequest.addListener(function(r) {
         return {redirectUrl: "chrome://blank"};
     } else if (url in peerKeys) { //if in someone elses peer
         //send a request for it to the peer
+        send('getImage:' + url);
         console.log("Peer cache hit.");
         chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
             console.log("sending message to: " + tabs[0].id);
