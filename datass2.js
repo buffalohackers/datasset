@@ -4,7 +4,7 @@ onmessagecallback = function(message) {
     console.log('DATA' + message.data);
     if (message.data == "getKeys") {
         console.log('SENDNIG KEYS');
-        send(keys);
+        sendCommand(keys);
     } else if (message.data.split(':').length > 1) {
         var mess = message.data.split(':', 3);
         if (mess[0] == 'getImage') {
