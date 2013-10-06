@@ -77,6 +77,7 @@ chrome.webRequest.onBeforeRequest.addListener(function(r) {
     } else {
         console.log("Hitting remote server.");
         chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+            console.log("inside");
             chrome.tabs.sendMessage(tabs[0].id, {key: url, type: "remote"});
         });
         return;
