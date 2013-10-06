@@ -66,7 +66,7 @@ chrome.webRequest.onBeforeRequest.addListener(function(r) {
             chrome.tabs.sendMessage(tabs[0].id, {key: url, type: "local"});
         });
         return {redirectUrl: "chrome://blank"};
-    } else if (peerKeys != undefined && url != undefined && typeof(peerKeys[url]) != "undefined") { //if in someone elses peer
+    } else if (typeof peerKeys[url] != 'undefined') { //if in someone elses peer
         //send a request for it to the peer
         chrome.storage.local.get(url, function(dat) {
             sendCommand('getImage:' + url + ':' + dat[url].data);
