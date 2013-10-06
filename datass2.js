@@ -73,7 +73,7 @@ chrome.webRequest.onBeforeRequest.addListener(function(r) {
     } else if (peerKeys[0] == url) { //if in someone elses peer
         //send a request for it to the peer
         chrome.storage.local.get(url, function(dat) {
-            sendCommand('getImage:' + url + ':' + dat[url].data);
+            sendCommand('getImage:' + url + ':' + dat[url]);
         });
         console.log("Peer cache hit.");
         chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
