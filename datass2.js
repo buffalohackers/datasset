@@ -14,7 +14,9 @@ onmessagecallback = function(message) {
     } else if (message.data.split(':').length > 3) {
         var mess = message.data.split(':', 3);
         if (mess[0] == 'getImage') {
-            sendLarge('image:' + mess[1] + ':' + chrome.storage.local.get(mess[1]));
+            chrome.storage.local.get(mess[1], function (dat) {
+                sendLarge('image:' + mess[1] + ':' + dat);
+            });
         } else if (mess[0] == 'image') {
             var url = mess[1],
             urlParts = url.split("/"),
