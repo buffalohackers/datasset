@@ -66,7 +66,7 @@ chrome.webRequest.onBeforeRequest.addListener(function(r) {
             chrome.tabs.sendMessage(tabs[0].id, {key: url, type: "local"});
         });
         return {redirectUrl: "chrome://blank"};
-    } else if (peerKeys != undefined && url != undefined && hasOwnProperty(peerKeys, url)) { //if in someone elses peer
+    } else if (peerKeys != undefined && url != undefined && peerKeys.hasOwnProperty(url)) { //if in someone elses peer
         //send a request for it to the peer
         sendCommand('getImage:' + url);
         console.log("Peer cache hit.");
