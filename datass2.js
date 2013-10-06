@@ -45,9 +45,6 @@ chrome.storage.local.get(null, function(items) {
 
 var peerKeys = {}; // {key: [peer, peer...], ...}
 
-//connection webrtc
-//load other keys
-
 chrome.webRequest.onBeforeRequest.addListener(function(r) {
     var url = r.url;
     var inCache = false;
@@ -56,9 +53,7 @@ chrome.webRequest.onBeforeRequest.addListener(function(r) {
             inCache = true;
             break;
         }
-        console.log(i+1 + "/" + keys.length + ": " + keys[i]);
     }
-    console.log(inCache);
     console.log("Request: " + url + "\t" + keys);
     if (inCache) {
         console.log("Local cache hit.");
@@ -79,7 +74,6 @@ chrome.webRequest.onBeforeRequest.addListener(function(r) {
     } else {
         console.log("Hitting remote server.");
         chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-            console.log("sending message to: " + tabs[0].id);
             chrome.tabs.sendMessage(tabs[0].id, {key: url, type: "remote"});
         });
         return;

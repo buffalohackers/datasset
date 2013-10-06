@@ -126,7 +126,7 @@ function _startDataChannel (id) {
         }
     };
 
-    _commandChannel[id] = _pcs[id].createDataChannel('data', {'reliable':true});
+    _commandChannel[id] = _pcs[id].createDataChannel('data', {'reliable': true});
     _commandChannel[id].onmessage = onmessagecallback;
 }
 
